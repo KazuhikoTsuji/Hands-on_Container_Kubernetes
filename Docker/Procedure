@@ -1,0 +1,14 @@
+##Stage0
+#GCPへのアクセス
+https://cloud.google.com/
+
+##Stage1
+#docker hubへのアクセス
+https://hub.docker.com/
+
+##Stage2
+#Step1: docker run コマンドでコンテナを作成
+-コンテナのデプロイ
+docker run --name nginx-container -p 8080:80 -d nginx:1.17.6
+-デプロイしたコンテナの確認
+$ docker ps
