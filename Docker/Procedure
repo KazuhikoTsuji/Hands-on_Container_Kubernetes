@@ -1,14 +1,51 @@
-##Stage0
+##Stage0 GCPへのアクセス
 #GCPへのアクセス
 https://cloud.google.com/
 
-##Stage1
+##Stage1 docker hubへのアクセス
 #docker hubへのアクセス
 https://hub.docker.com/
 
-##Stage2
+##Stage2 NGINXコンテナのデプロイ
 #Step1: docker run コマンドでコンテナを作成
+
 -コンテナのデプロイ
 docker run --name nginx-container -p 8080:80 -d nginx:1.17.6
+
 -デプロイしたコンテナの確認
-$ docker ps
+docker ps
+
+#Step2: デプロイしたNGINXコンテナへクライアントからアクセス
+
+-外部IPアドレスの確認
+各参加者のNOに応じたVMインスタンスの外部IPを確認
+
+-クライアントブラウザから外部IPアドレス:8080へアクセス
+または
+-Google Cloud Shellから外部IPアドレス:8080へアクセス
+curl http://<外部IP>:8080/
+
+##Stage3 イメージビルド
+#Step1: ビルドに使用するディレクトリとファイルの準備
+
+-ビルド作業用ディレクトリの作成、ディレクトリ移動
+mkdir docker-build && cd $_
+
+-Dockerfileの作成
+vi Dockerfile
+
+FROM nginx:1.17.6
+COPY index.html /usr/share/nginx/html/
+
+:wq
+
+-index.htmlの作成
+vi index.html
+
+↓好きな文字列を記入
+Hello World!
+
+:wq
+
+-ディレクトリに2つのファイル(Dockerfile, index.html)が存在することを確認
+ls
