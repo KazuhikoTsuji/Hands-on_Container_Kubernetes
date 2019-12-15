@@ -1,0 +1,48 @@
+##Stage0 GCPへのアクセス
+  #GCPへのアクセス
+    https://cloud.google.com/
+    
+  #<参考> kubectlコマンドで各種コンポーネントを確認
+    -Kubernetesを構成しているNodeを確認
+      $ kubectl get node
+
+    -Kubernetesを構成しているPodを確認
+      $ kubectl get pods -n kube-system -o wide
+
+##Stage1 Podのデプロイ
+  #Step1-①: Kubectl run コマンドで直接Podを作成
+    -Podを作成
+      $ kubectl run nginx --image=nginx:1.17.4 --restart=Never
+      
+    -Podが作成されたことを確認
+      $ kubectl get pods
+    
+    -Podが作成されたことを確認(詳細)
+      $ kubectl get pods -w
+      
+    -Podにアクセス
+      $ curl http://<クラスターIPアドレス>/
+      
+    -Podを削除
+      $ kubectl delete pod nginx
+
+    -Podが削除されたことを確認
+      $ kubectl get pods
+
+  #Step1-②: Kubectl apply コマンドでマニフェストファイルからPodを作成
+    -マニフェストを生成
+      $ kubectl run nginx --image=nginx:1.17.6 --restart=Never --dry-run -o yaml
+
+    -マニフェストをファイルに出力
+      $ mkdir yamls && cd $_
+      $ kubectl run nginx --image=nginx:1.17.6 --restart=Never --dry-run -o yaml > nginx-pod.yaml
+      $ ls
+
+    -マニフェストファイルからPodをデプロイ
+      $ kubectl apply -f nginx-pod.yaml
+      $ kubectl get pods
+
+    -Podを削除
+      $ kubectl delete -f nginx-pod.yaml
+      $ kubectl get pods
+
