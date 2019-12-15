@@ -12,7 +12,7 @@
 ##Stage1 Podのデプロイ
   #Step1-①: Kubectl run コマンドで直接Podを作成
     -Podを作成
-      $ kubectl run nginx --image=nginx:1.17.4 --restart=Never
+      $ kubectl run nginx --image=nginx:1.17.6 --restart=Never
       
     -Podが作成されたことを確認
       $ kubectl get pods
