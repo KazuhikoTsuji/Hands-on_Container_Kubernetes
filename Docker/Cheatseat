@@ -10,7 +10,6 @@
   #docker hubアカウントのサインアップ
 
 ##Stage2 NGINXコンテナのデプロイ
-
   #Step1: docker run コマンドでコンテナを作成
     -コンテナのデプロイ
       $ docker run --name nginx-container -p 8080:80 -d nginx:1.17.6
