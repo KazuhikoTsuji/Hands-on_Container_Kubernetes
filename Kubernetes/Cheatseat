@@ -18,7 +18,7 @@
       $ kubectl get pods
     
     -Podが作成されたことを確認(詳細)
-      $ kubectl get pods -w
+      $ kubectl get pods -o wide
       
     -Podにアクセス
       $ curl http://<クラスターIPアドレス>/
@@ -158,7 +158,23 @@
     -Podの状態を確認
       $ kubectl get pods
 
-  #Step4-②:Deploymentを編集して、Podの数を増減させる
+  #Step4-②:マニフェストファイルでDeploymentを上書きして、replicasの数を元に戻す
+    -Deploymentのマニフェストファイルのreplicasの数を確認
+      $ cat nginx-deployment.yaml
+
+    -マニフェストファイルを上書き適用
+      $ kubectl apply -f nginx-deployment.yaml
+    
+    -Deploymentの状態を確認
+      $ kubectl get deployment
+
+    -ReplicaSetの状態を確認
+      $ kubectl get replicaset
+
+    -Podの状態を確認
+      $ kubectl get pods
+
+  #Step4-③:マニフェストファイルを編集して、Podの数を増減させる
     -Deploymentのパラメーターは下記の方法でも可能
       $ vi nginx-deployment.yaml
 
@@ -182,12 +198,12 @@
     -Podの状態を確認
       $ kubectl get pods	
 
-  #Step4-③:Deploymentを編集せずに、コマンドラインからPodの数を増減させる
+  #Step4-④:Deploymentを編集せずに、コマンドラインからPodの数を増減させる
     -Pod数増加前のDeploymentの状態を確認
       $ kubectl get deployment
 
     -コマンドラインでDeploymentのPod数を増加
-      $ kubectl scale deployment/nginx --replicas=4
+      $ kubectl scale deployment/nginx --replicas=2
 
     -Pod数増加後のDeploymentの状態を確認
       $ kubectl get deployment
