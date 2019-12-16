@@ -95,3 +95,103 @@
 
     -namespace prodにPodが存在しないことを確認
       $ kubectl get pods -n prod
+
+##Stage2 DeploymentとReplicaSetの活用
+  #Step1: Kubectl apply コマンドでマニフェストファイルからDeploymentを作成
+    -マニフェストを生成
+      $ kubectl run nginx --image=nginx:1.17.6 --restart=Always --replicas=2 --dry-run -o yaml
+
+    -マニフェストをファイルに出力
+      $ kubectl run nginx --image=nginx:1.17.6 --restart=Always --replicas=2 --dry-run -o yaml > nginx-deployment.yaml 
+      $ ls
+
+    -マニフェストファイルからDeploymentを作成
+      $ kubectl apply -f nginx-deployment.yaml
+
+    -Deploymentが作成されたことを確認
+      $ kubectl get deployment
+
+    -ReplicaSetが作成されたことを確認
+      $ kubectl get replicasets
+
+    -Podが作成されたことを確認
+      $ kubectl get pods
+
+  #Step2: マニフェストファイルの記述内容を確認
+    -Deploymentの記述内容を確認
+      $ kubectl get deploy nginx -o yaml --export
+
+    -ReplicaSetの記述内容を確認
+      $ kubectl get replicaset <ReplicaSet名> -o yaml --export
+
+    -Podの記述内容を確認
+      $ kubectl get pods <Pod名> -o yaml --export
+
+  #Step3: Podを意図的に削除して、オートヒーリングすることを確認
+    -稼働中のPodを確認
+      $ kubectl get pods
+
+    -Podを一つ削除
+      $ kubectl delete pod <Pod名>
+
+    -Podが削除されるが、新しいPodが即座に作成されることを確認
+      $ kubectl get pods
+
+  #Step4-①:Deploymentを編集して、Podの数を増減させる
+    -Deploymentのパラメーターを編集
+      $ kubectl edit deployment nginx
+
+      #編集
+       replicas: 2
+       ↓
+       replicas: 4
+
+      #viを終了
+       :wq
+
+    -Deploymentの状態を確認
+      $ kubectl get deployment
+
+    -ReplicaSetの状態を確認
+      $ kubectl get replicaset
+
+    -Podの状態を確認
+      $ kubectl get pods
+
+  #Step4-②:Deploymentを編集して、Podの数を増減させる
+    -Deploymentのパラメーターは下記の方法でも可能
+      $ vi nginx-deployment.yaml
+
+      #編集
+       replicas: 2
+        ↓
+       replicas: 4
+
+      #viを終了
+       :wq
+
+    -マニフェストファイルを上書き適用
+      $ kubectl apply -f nginx-deployment.yaml
+
+    -Deploymentの状態を確認
+      $ kubectl get deploy
+
+    -ReplicaSetの状態を確認
+      $ kubectl get replicaset
+
+    -Podの状態を確認
+      $ kubectl get pods	
+
+  #Step4-③:Deploymentを編集せずに、コマンドラインからPodの数を増減させる
+    -Pod数増加前のDeploymentの状態を確認
+      $ kubectl get deployment
+
+    -コマンドラインでDeploymentのPod数を増加
+      $ kubectl scale deployment/nginx --replicas=4
+
+    -Pod数増加後のDeploymentの状態を確認
+      $ kubectl get deployment
+
+    -Podの状態を確認
+      $ kubectl get pods
+
