@@ -4,7 +4,7 @@
     
   #<参考> kubectlコマンドで各種コンポーネントを確認
     -Kubernetesを構成しているNodeを確認
-      $ kubectl get node
+      $ kubectl get nodes
 
     -Kubernetesを構成しているPodを確認
       $ kubectl get pods -n kube-system -o wide
