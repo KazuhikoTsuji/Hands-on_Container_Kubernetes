@@ -238,7 +238,7 @@
   #Step1:ローリングアップデート実行前の状態確認
     <クライアント側>
       -サービスに継続的にアクセス
-        $ while true; do curl http:// 34.83.211.85:32744; sleep 3; done
+        $ while true; do curl http://34.83.211.85:32744; sleep 1; done
 
     <クラスター側>
       -Podの状態を確認
@@ -255,7 +255,7 @@
 
   #Step2:ローリングアップデート実行
       -Deploymentのイメージを更新
-        $ kubectl set image deployment nginx nginx=kazuhikotsuji/nginx:1.13
+        $ kubectl set image deployment nginx nginx=kazuhikotsuji/nginx:1.13 --record=true
 
       -イメージ更新の結果を確認
         $ kubectl rollout status deployment nginx
@@ -274,7 +274,7 @@
 
   #Step3:ローリングアップデート実行
       -Deploymentのイメージを更新
-        $ kubectl set image deployment nginx nginx=kazuhikotsuji/nginx:1.17
+        $ kubectl set image deployment nginx nginx=kazuhikotsuji/nginx:1.17 --record=true
 
       -イメージ更新の結果を確認
         $ kubectl rollout status deployment nginx
