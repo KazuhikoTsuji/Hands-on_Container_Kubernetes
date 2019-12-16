@@ -195,3 +195,26 @@
     -Podの状態を確認
       $ kubectl get pods
 
+##Stage3 Serviceの定義
+  #Step1:Service(NodePort)を作成して、クラスター外からPodへのアクセスポイントを提供する
+    -マニフェストを生成
+      $ kubectl expose deployment nginx --name=nginx-service --port=80 --target-port=80 --type=NodePort --dry-run -o yaml
+
+    -マニフェストをファイルに出力
+      $ kubectl expose deployment nginx --name nginx-service --port=80 --target-port=80 --type=NodePort --dry-run -o yaml > nginx-service.yaml
+      $ ls
+
+    -マニフェストファイルからServiceを作成
+      $ kubectl apply -f nginx-service.yaml
+
+    -Serviceが作成されたことを確認
+      $ kubectl get services
+        ↑NodePortのポート番号を確認
+      
+    -クラスター内のノードのIPアドレスを確認
+      外部IPを確認
+    
+    -クライアントブラウザから<外部IPアドレス>:<NodePort>へアクセス
+     または
+    -Google Cloud Shellから<外部IPアドレス>:<NodePort>へアクセス
+
