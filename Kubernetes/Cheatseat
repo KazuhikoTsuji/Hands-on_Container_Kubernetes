@@ -212,9 +212,78 @@
         ↑NodePortのポート番号を確認
       
     -クラスター内のノードのIPアドレスを確認
-      外部IPを確認
+      外部IPアドレスを確認
     
     -クライアントブラウザから<外部IPアドレス>:<NodePort>へアクセス
      または
     -Google Cloud Shellから<外部IPアドレス>:<NodePort>へアクセス
 
+##Stage4 ローリングアップデート
+  #Step1:ローリングアップデート実行前の状態確認
+    <クライアント側>
+      -サービスに継続的にアクセス
+        $ while true; do curl http:// 34.83.211.85:32744; sleep 3; done
+
+    <クラスター側>
+      -Podの状態を確認
+        $ kubectl get pods
+
+      -Deploymentの状態を確認
+        $ kubectl get deployment
+        
+      -ReplicaSetの状態を確認
+        $ kubectl get replicaset
+
+      -バージョン管理の状態を確認
+        $ kubectl rollout history deployment nginx
+
+  #Step2:ローリングアップデート実行
+      -Deploymentのイメージを更新
+        $ kubectl set image deployment nginx nginx=kazuhikotsuji/nginx:1.13
+
+      -イメージ更新の結果を確認
+        $ kubectl rollout status deployment nginx
+
+      -バージョン管理の状態を確認
+        $ kubectl rollout history deployment nginx
+
+      -Deploymentの状態を確認
+        $ kubectl get deployment
+
+      -ReplicaSetの状態を確認
+        $ kubectl get replicaset
+
+      -Podの状態を確認
+        $ kubectl get pods
+
+  #Step3:ローリングアップデート実行
+      -Deploymentのイメージを更新
+        $ kubectl set image deployment nginx nginx=kazuhikotsuji/nginx:1.17
+
+      -イメージ更新の結果を確認
+        $ kubectl rollout status deployment nginx
+
+      -バージョン管理の状態を確認
+        $ kubectl rollout history deployment nginx
+
+      -Deploymentの状態を確認
+        $ kubectl get deployment
+
+      -ReplicaSetの状態を確認
+        $ kubectl get replicaset
+
+      -Podの状態を確認
+        $ kubectl get pods
+
+  #Step4:ロールバックの実行
+      -Deploymentのイメージを以前のバージョンに更新
+        $ kubectl rollout undo deployment nginx
+
+      -ロールバックの結果を確認
+        $ kubectl rollout status deployment nginx
+
+      -Podの状態を確認
+        $ kubectl get pods
+
+      -参考:ロールバックは特定バージョンの指定が可能
+        $ kubectl rollout undo deploy nginx --to-revision=2
