@@ -46,3 +46,52 @@
       $ kubectl delete -f nginx-pod.yaml
       $ kubectl get pods
 
+  #Step2: namespaceを指定してPodを作成
+    -新規にnamespaceを作成
+     マニフェストを生成 namespace名:prod
+      $ kubectl create namespace prod --dry-run -o yaml
+
+    -マニフェストをファイルに出力
+      $ kubectl create namespace prod --dry-run -o yaml > prod-namespace.yaml
+      $ ls
+
+    -マニフェストファイルからnamespaceを作成
+      $ kubectl apply -f prod-namespace.yaml
+
+    -namespace prodが作成されたことを確認
+      $ kubectl get namespace
+
+    -namespace prodにPodが存在しないことを確認
+      $ kubectl get pods -n prod
+
+    -マニフェストファイルを編集
+      $ vi nginx-pod.yaml
+
+      #下記を追加
+        namespace: prod
+
+      :w nginx-pod-prod.yaml
+
+      #下記の出力を確認
+        "nginx-pod-prod.yaml" [New] 17L, 290C written
+
+      #viを終了
+        :q!
+
+      #新しいマニフェストファイルが作成されたことを確認
+        $ ls
+
+    -マニフェストファイルからPodをデプロイ
+      $ kubectl apply -f nginx-pod-prod.yaml
+
+    -defaultネームスペースにはPodがデプロイされていないことを確認
+      $ kubectl get pods
+
+    -prodネームスペースにPodがデプロイされていることを確認
+      $ kubectl get pods -n prod
+
+    -Podを削除
+      $ kubectl delete -f nginx-pod-prod.yaml
+
+    -namespace prodにPodが存在しないことを確認
+      $ kubectl get pods -n prod
