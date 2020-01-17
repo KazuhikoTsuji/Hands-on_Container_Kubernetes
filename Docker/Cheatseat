@@ -10,14 +10,30 @@
   #docker hubアカウントのサインアップ
 
 ##Stage2 NGINXコンテナのデプロイ
-  #Step1: docker run コマンドでコンテナを作成
+  #Step1: docker imageの管理
+    -ローカルに格納されているdocker Imageの確認
+    　$ docker images
+
+    -Docker Hubからnginx imageをPull
+      $ docker pull nginx:1.17.6
+
+    -ローカルに格納されているdocker imageの確認
+      $ docker images
+
+    -ローカルに格納されているdocker imageの削除
+      $ docker image rm nginx:1.17.6
+
+    -ローカルに格納されているdocker imageの確認
+      $ docker images
+
+  #Step2: docker run コマンドでコンテナを作成
     -コンテナのデプロイ
       $ docker run --name nginx-container -p 8080:80 -d nginx:1.17.6
 
     -デプロイしたコンテナの確認
       $ docker ps
 
-  #Step2: デプロイしたNGINXコンテナへクライアントからアクセス
+  #Step3: デプロイしたNGINXコンテナへクライアントからアクセス
   
     -外部IPアドレスの確認
       各参加者のNOに応じたVMインスタンスの外部IPを確認
@@ -27,9 +43,9 @@
     -Google Cloud Shellから外部IPアドレス:8080へアクセス
       $ curl http://<外部IP>:8080/
 
-  #Step3: ローカルにPullしたDocker Imageの確認
+  #Step4: Docker Imageの確認
 
-    -ローカルにPullしたDocker Imageの確認
+    -ローカルに格納されているDocker Imageの確認
       $ docker images
 
 ##Stage3 イメージビルド
