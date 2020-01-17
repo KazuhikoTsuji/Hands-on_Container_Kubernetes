@@ -33,7 +33,12 @@
     -デプロイしたコンテナの確認
       $ docker ps
 
-  #Step3: デプロイしたNGINXコンテナへクライアントからアクセス
+  #Step3: Docker Imageの確認
+
+    -ローカルに格納されているDocker Imageの確認
+      $ docker images
+
+  #Step4: デプロイしたNGINXコンテナへクライアントからアクセス
   
     -外部IPアドレスの確認
       各参加者のNOに応じたVMインスタンスの外部IPを確認
@@ -42,11 +47,6 @@
     または
     -Google Cloud Shellから外部IPアドレス:8080へアクセス
       $ curl http://<外部IP>:8080/
-
-  #Step4: Docker Imageの確認
-
-    -ローカルに格納されているDocker Imageの確認
-      $ docker images
 
 ##Stage3 イメージビルド
   #Step1: ビルドに使用するディレクトリとファイルの準備
