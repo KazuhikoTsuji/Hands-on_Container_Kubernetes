@@ -48,6 +48,34 @@
     -Google Cloud Shellから外部IPアドレス:8080へアクセス
       $ curl http://<外部IP>:8080/
 
+  #Step5: デプロイしたコンテナの管理
+
+    -コンテナの停止
+      $ docker stop nginx-container
+    
+    -コンテナの確認(docker ps)
+      $ docker ps
+
+    -コンテナの確認(docker ps -a)
+      $ docker ps -a
+
+    -コンテナの削除
+      $ docker rm nginx-container
+
+    -コンテナの確認(docker ps -a)
+      $ docker ps -a
+
+  #Step6: 削除したコンテナの再デプロイ
+
+    -imageの確認
+      $ docker images
+
+    -コンテナの再デプロイ
+      $ docker run --name nginx-container -p 8080:80 -d nginx:1.17.6
+
+    -コンテナの確認
+      $ docker ps
+    
 ##Stage3 イメージビルド
   #Step1: ビルドに使用するディレクトリとファイルの準備
   
