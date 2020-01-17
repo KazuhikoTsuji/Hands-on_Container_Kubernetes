@@ -119,7 +119,7 @@
 
   #Step2: マニフェストファイルの記述内容を確認
     -Deploymentの記述内容を確認
-      $ kubectl get deploy nginx -o yaml --export
+      $ kubectl get deployment nginx -o yaml --export
 
     -ReplicaSetの記述内容を確認
       $ kubectl get replicaset <ReplicaSet名> -o yaml --export
@@ -190,7 +190,7 @@
       $ kubectl apply -f nginx-deployment.yaml
 
     -Deploymentの状態を確認
-      $ kubectl get deploy
+      $ kubectl get deployment
 
     -ReplicaSetの状態を確認
       $ kubectl get replicaset
@@ -302,4 +302,4 @@
         $ kubectl get pods
 
       -参考:ロールバックは特定バージョンの指定が可能
-        $ kubectl rollout undo deploy nginx --to-revision=2
+        $ kubectl rollout undo deployment nginx --to-revision=2
