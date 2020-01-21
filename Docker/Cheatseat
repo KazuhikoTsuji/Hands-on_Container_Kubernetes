@@ -177,3 +177,12 @@
     または
     -Google Cloud Shellから外部IPアドレス:8081へアクセス
       $ curl http://<外部IP>:8081/
+
+##Stage4 コンテナネットワーク
+      $ ip link
+
+      $ docker ps
+
+      $ sudo iptables -L DOCKER -n
+
+      $ sudo iptables -t nat -L DOCKER -n
