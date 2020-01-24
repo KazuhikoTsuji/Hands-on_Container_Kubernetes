@@ -47,6 +47,9 @@
       $ kubectl get pods
 
   #Step2: namespaceを指定してPodを作成
+    -現在のnamespaceの一覧を確認
+      $ kubectl get namespaces
+      
     -新規にnamespaceを作成
      マニフェストを生成 namespace名:prod
       $ kubectl create namespace prod --dry-run -o yaml
